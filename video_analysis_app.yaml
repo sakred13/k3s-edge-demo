@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: video-streamer
-        image: video-streaming-image
+        image: sakred22/k3s-edge-demo:streamer
 
 ---
 
@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: metrics-processor
-        image: metrics-processing-image
+        image: sakred22/k3s-edge-demo:videoprocessor
 
 ---
 
@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
       - name: display-service
-        image: display-service-image
+        image: sakred22/k3s-edge-demo:webapp
         ports:
         - containerPort: 80
 
@@ -68,5 +68,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 8080  # Optional: Specify a node port or leave it to be assigned dynamically
-
+      nodePort: 8080
