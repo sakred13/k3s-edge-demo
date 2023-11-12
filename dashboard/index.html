@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Stream Display</title>
+</head>
+<body>
+    <h1>Video Stream</h1>
+    <video id="videoStream" width="640" height="480" controls autoplay></video>
+    <h2>Metrics</h2>
+    <textarea id="metrics" rows="10" cols="50">Metrics will appear here...</textarea>
+
+    <script>
+        // JavaScript to update video and metrics
+        document.getElementById('videoStream').src = 'URL_OF_YOUR_VIDEO_STREAM';
+
+        // Example function to update metrics with simulated data
+        function updateMetrics() {
+            // Simulated frame number and resolution
+            var frame = Math.floor(Math.random() * 1000);
+            var resolutionWidth = Math.floor(Math.random() * (1920 - 1280) + 1280);
+            var resolutionHeight = Math.floor(Math.random() * (1080 - 720) + 720);
+
+            // Update the metrics text area
+            document.getElementById('metrics').value = "Frame: " + frame + ", Resolution: " + resolutionWidth + "x" + resolutionHeight;
+        }
+
+        // Update metrics every second
+        setInterval(updateMetrics, 1000);
+    </script>
+</body>
+</html>
