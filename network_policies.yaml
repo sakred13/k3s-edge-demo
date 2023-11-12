@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: video-streaming-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: video-streamer
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: metrics-processor
+      ports:
+        - protocol: TCP
+          port: <METRICS_PROCESSOR_PORT>
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: metrics-processing-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: metrics-processor
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: video-streamer
+      ports:
+        - protocol: TCP
+          port: <METRICS_PROCESSOR_PORT>
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: display-service-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: display-service
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    # Define egress rules as per your requirements
