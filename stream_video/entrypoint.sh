@@ -1,10 +1,13 @@
 #!/bin/sh
 
-# Start the first video streaming script in the background
-./send_to_dashboard.sh &
+# Define the destination IP and port for the metrics processing service
+DEST_IP="metrics-svc"
+DEST_PORT="80"
 
-# Start the second video streaming script in the background
-./send_to_processing_edge.sh &
+while true; do
+    # Stream the first video for 15 seconds
+    ffmpeg -re -i /video1.mp4 -t 46 -f mpegts udp://${DEST_IP}:${DEST_PORT}
 
-# Wait for both scripts to finish before exiting
-wait
+    # Stream the second video for 15 seconds
+    ffmpeg -re -i /video2.mp4 -t 46 -f mpegts udp://${DEST_IP}:${DEST_PORT}
+done

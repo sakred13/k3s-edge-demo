@@ -11,21 +11,15 @@
 
     <script>
         // JavaScript to update video and metrics
-        document.getElementById('videoStream').src = 'udp://0.0.0.0:6666';
+        document.getElementById('videoStream').src = 'SOURCE_OF_VIDEO';
 
-        // Example function to update metrics with simulated data
-        function updateMetrics() {
-            // Simulated frame number and resolution
-            var frame = Math.floor(Math.random() * 1000);
-            var resolutionWidth = Math.floor(Math.random() * (1920 - 1280) + 1280);
-            var resolutionHeight = Math.floor(Math.random() * (1080 - 720) + 720);
+        // Create a WebSocket connection to the server
+        const socket = new WebSocket('ws://3.15.154.36:8765');  // Replace SERVER_IP with your server's IP address
 
-            // Update the metrics text area
-            document.getElementById('metrics').value = "Frame: " + frame + ", Resolution: " + resolutionWidth + "x" + resolutionHeight;
-        }
-
-        // Update metrics every second
-        setInterval(updateMetrics, 1000);
+        // Update the metrics text area when a message is received from the WebSocket
+        socket.addEventListener('message', (event) => {
+            document.getElementById('metrics').value = event.data;
+        });
     </script>
 </body>
 </html>
